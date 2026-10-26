@@ -7,7 +7,9 @@ const AdminLayout = () => {
         <nav className="bg-green-400">
             <h1>Admin DashBoard</h1>
         </nav>
-        <Outlet/>
+        <main className="bg-[#F5F5F5]">
+          <Outlet/>
+        </main>
     </div>
   )
 }
