@@ -13,7 +13,7 @@ interface Props{
 
 const CustomPagination = ({totalPages}:Props) => {
 
-  const page:number = 1;
+  const page:number = 2;
 
   return (
       <div className="flex items-center justify-center space-x-2">
