@@ -1,12 +1,26 @@
 import { RouterProvider } from "react-router/dom";
 import { appRouter } from "./router/app.router";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query'
+
+
+// Create a client
+
+const queryClient = new QueryClient()
 
 const HeroesApp = () => {
   return (
-    <div>
+    // Provide the client to your App
+
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={appRouter} />
-    </div>
+
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
 
