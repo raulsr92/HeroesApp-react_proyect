@@ -1,17 +1,29 @@
 
+import type { Hero } from "../types/hero.interface"
 import HeroGridCard from "./HeroGridCard"
 
-const HeroGrid = () => {
+
+interface Props{
+  heroesArray?: Hero[]
+}
+
+
+const HeroGrid = ({heroesArray}:Props) => {
   return (
     <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          {
+              heroesArray?.map((heroeItem)=>(
 
-            <HeroGridCard/>
-            <HeroGridCard/>
-            <HeroGridCard/>
-            <HeroGridCard/>
-            <HeroGridCard/>
-            <HeroGridCard/>
+                  <HeroGridCard heroe={heroeItem}/>
+
+              ))
+
+          }
+
+
+            
+            
 
         {/*
           <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50">

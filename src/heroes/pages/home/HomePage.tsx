@@ -18,16 +18,14 @@ const HomePage =() => {
 
   // Queries (tanStack)
 
-    const {data} = useQuery({
-
+    const {data:heroesResponse} = useQuery({
         queryKey:['heroes'],
         queryFn: ()=> getHeroesByPageAction(),
         staleTime: 1000 * 60 * 5 //5 minutos
     })
 
-    console.log({data})
-  
-    
+    console.log({heroesResponse})
+
   return (
     <>
 
@@ -70,7 +68,7 @@ const HomePage =() => {
               {/* Tab 1 */}
                 <TabsContent value="all">
                   {/* Mostrar todos los personajes */}
-                    <HeroGrid/>
+                    <HeroGrid heroesArray={heroesResponse?.heroes}/>
                 </TabsContent>
 
               {/* Tab 2 */}

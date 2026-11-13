@@ -11,15 +11,20 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import type { Hero } from "../types/hero.interface"
 
-const HeroGridCard = () => {
+interface Props{
+  heroe: Hero
+}
+
+const HeroGridCard = ({heroe}:Props) => {
   return (
     <>
         <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-gray-50">
             <div className="relative h-64 overflow-hidden">
               <img
-                src="/placeholder.svg?height=300&width=300"
-                alt="Superman"
+                src={`${heroe.image}?height=100&width=300`}
+                alt={heroe.alias}
                 className="object-cover transition-all duration-500 group-hover:scale-110"
               />
 
@@ -32,7 +37,7 @@ const HeroGridCard = () => {
               </div>
 
               {/* Universe badge */}
-              <Badge className="absolute top-3 right-3 text-xs bg-blue-600 text-white">DC</Badge>
+              <Badge className="absolute top-3 right-3 text-xs bg-blue-600 text-white">{heroe.universe}</Badge>
 
               {/* Favorite button */}
               <Button size="sm" variant="ghost" className="absolute bottom-3 right-3 bg-white/90 hover:bg-white">
@@ -52,19 +57,19 @@ const HeroGridCard = () => {
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
-                  <h3 className="font-bold text-lg leading-tight">Superman</h3>
-                  <p className="text-sm text-gray-600">Clark Kent</p>
+                  <h3 className="font-bold text-lg leading-tight">{heroe.alias}</h3>
+                  <p className="text-sm text-gray-600">{heroe.name}</p>
                 </div>
-                <Badge className="text-xs bg-green-100 text-green-800 border-green-200">Hero</Badge>
+                <Badge className="text-xs bg-green-100 text-green-800 border-green-200">{heroe.category}</Badge>
               </div>
               <Badge variant="outline" className="w-fit text-xs">
-                Justice League
+                {heroe.team}
               </Badge>
             </CardHeader>
 
             <CardContent className="space-y-4">
               <p className="text-sm text-gray-600 line-clamp-2">
-                The Last Son of Krypton, protector of Earth and symbol of hope for all humanity.
+                {heroe.description}
               </p>
 
               {/* Stats */}
@@ -74,7 +79,7 @@ const HeroGridCard = () => {
                     <Zap className="h-3 w-3 text-orange-500" />
                     <span className="text-xs font-medium">Strength</span>
                   </div>
-                  <Progress value={80} className="h-2" activeColor="bg-orange-500"/>
+                  <Progress value={(heroe.strength)*10} className="h-2" activeColor="bg-orange-500"/>
                 </div>
 
                 <div className="space-y-1">
@@ -82,7 +87,7 @@ const HeroGridCard = () => {
                     <Brain className="h-3 w-3 text-blue-500" />
                     <span className="text-xs font-medium">Intelligence</span>
                   </div>
-                  <Progress value={80} className="h-2" activeColor="bg-blue-500"/>
+                  <Progress value={(heroe.intelligence)*10} className="h-2" activeColor="bg-blue-500"/>
                 </div>
 
                 <div className="space-y-1">
@@ -90,7 +95,7 @@ const HeroGridCard = () => {
                     <Gauge className="h-3 w-3 text-green-500" />
                     <span className="text-xs font-medium">Speed</span>
                   </div>
-                  <Progress value={90} className="h-2" activeColor="bg-green-500"/>
+                  <Progress value={(heroe.speed)*10} className="h-2" activeColor="bg-green-500"/>
                 </div>
 
                 <div className="space-y-1">
@@ -98,7 +103,7 @@ const HeroGridCard = () => {
                     <Shield className="h-3 w-3 text-purple-500" />
                     <span className="text-xs font-medium">Durability</span>
                   </div>
-                  <Progress value={100} className="h-2" activeColor="bg-purple-500" />
+                  <Progress value={(heroe.durability)*10} className="h-2" activeColor="bg-purple-500" />
                 </div>
               </div>
 
@@ -106,19 +111,23 @@ const HeroGridCard = () => {
               <div className="space-y-2">
                 <h4 className="font-medium text-sm">Powers:</h4>
                 <div className="flex flex-wrap gap-1">
-                  <Badge variant="outline" className="text-xs">
-                    Super Strength
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    Flight
-                  </Badge>
+                  {
+                    heroe.powers
+                      .filter((_,indice)=> indice<2)
+                      .map((power)=>(
+                        <Badge variant="outline" className="text-xs">
+                          {power}
+                        </Badge>
+                      ))
+                  }
+                
                   <Badge variant="outline" className="text-xs bg-gray-100">
                     +4 more
                   </Badge>
                 </div>
               </div>
 
-              <div className="text-xs text-gray-500 pt-2 border-t">First appeared: 1938</div>
+              <div className="text-xs text-gray-500 pt-2 border-t">First appeared: {heroe.firstAppearance}</div>
             </CardContent>
         </Card>    
 
