@@ -12,8 +12,10 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import type { Hero } from "../types/hero.interface"
+import { cn } from "cn"
 
 interface Props{
+
   heroe: Hero
 }
 
@@ -30,14 +32,30 @@ const HeroGridCard = ({heroe}:Props) => {
 
               {/* Status indicator */}
               <div className="absolute top-3 left-3 flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div className={cn(
+                                    "w-3 h-3 rounded-full",
+                                    {
+                                      "bg-green-500": heroe.status==="Active",
+                                      "bg-red-500": heroe.status !=="Active"
+                                    }
+                                 )
+                                } />
                 <Badge variant="secondary" className="text-xs bg-white/90 text-gray-700">
-                  Active
+                  {heroe.status}
                 </Badge>
               </div>
 
               {/* Universe badge */}
-              <Badge className="absolute top-3 right-3 text-xs bg-blue-600 text-white">{heroe.universe}</Badge>
+              <Badge className={cn(
+                                    "absolute top-3 right-3 text-xs  text-white",
+                                    { 
+                                      "bg-blue-600": heroe.universe === "DC",
+                                      "bg-red-600": heroe.universe === "Marvel"
+                                    }
+                                    ) 
+                                }>
+                                  {heroe.universe}
+              </Badge>
 
               {/* Favorite button */}
               <Button size="sm" variant="ghost" className="absolute bottom-3 right-3 bg-white/90 hover:bg-white">
@@ -120,14 +138,19 @@ const HeroGridCard = ({heroe}:Props) => {
                         </Badge>
                       ))
                   }
-                
-                  <Badge variant="outline" className="text-xs bg-gray-100">
-                    +4 more
-                  </Badge>
+
+                  {
+                    heroe.powers.length > 2 && 
+                    (
+                      <Badge variant="outline" className="text-xs bg-gray-100">
+                          +{heroe.powers.length-2} more
+                      </Badge>
+                    )
+                  }
                 </div>
               </div>
 
-              <div className="text-xs text-gray-500 pt-2 border-t">First appeared: {heroe.firstAppearance}</div>
+              <div className="text-xs text-gray-500 pt-2 border-t">Primera aparición: {heroe.firstAppearance}</div>
             </CardContent>
         </Card>    
 

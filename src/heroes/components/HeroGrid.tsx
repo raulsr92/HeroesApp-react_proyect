@@ -7,7 +7,6 @@ interface Props{
   heroesArray?: Hero[]
 }
 
-
 const HeroGrid = ({heroesArray}:Props) => {
   return (
     <>
@@ -15,7 +14,11 @@ const HeroGrid = ({heroesArray}:Props) => {
           {
               heroesArray?.map((heroeItem)=>(
 
-                  <HeroGridCard heroe={heroeItem}/>
+                  <HeroGridCard 
+                  
+                    key={heroeItem.id}
+                    heroe={heroeItem}
+                  />
 
               ))
 

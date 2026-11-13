@@ -68,7 +68,7 @@ const HomePage =() => {
               {/* Tab 1 */}
                 <TabsContent value="all">
                   {/* Mostrar todos los personajes */}
-                    <HeroGrid heroesArray={heroesResponse?.heroes}/>
+                    <HeroGrid heroesArray={heroesResponse?.heroes ?? []}/>
                 </TabsContent>
 
               {/* Tab 2 */}
