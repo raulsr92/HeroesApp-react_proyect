@@ -14,8 +14,7 @@ const HeroGrid = ({heroesArray}:Props) => {
           {
               heroesArray?.map((heroeItem)=>(
 
-                  <HeroGridCard 
-                  
+                  <HeroGridCard  
                     key={heroeItem.id}
                     heroe={heroeItem}
                   />
