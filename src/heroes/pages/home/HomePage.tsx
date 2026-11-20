@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useMemo } from 'react'
 import { useQuery}  from '@tanstack/react-query'
+import { useSearchParams } from "react-router"
 
 import {
   Heart,
@@ -14,7 +15,31 @@ import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page.actio
 
 const HomePage =() => {
 
-  const[activeTab, setActiveTab] = useState<'all'|'favorites'|'heroes'|'villains'>('all')
+  // useSearchParams (react router para query parameters)
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    //--Atrapar searchParam de la URL
+        const activeTab = searchParams.get("tab")  || "all"
+    
+    //--Validar que el searchParam sea un valor válido (si esque se manipula la URL)
+
+        const selectedTab = useMemo(()=>{
+          const validTabs = ['all','favorites','heroes','villains'];
+          //Validar
+          return validTabs.includes(activeTab)? activeTab:'all' ;
+         },[activeTab])
+
+    //--Método para cambiar la searchParam necesaria solamente
+
+        const handleSearchParams = ( serachParam:string, newValue:string) =>{
+
+          setSearchParams((searchParams) => {
+            searchParams.set(serachParam, newValue);
+          return searchParams;
+          });
+        }
+
 
   // Queries (tanStack)
 
@@ -44,23 +69,28 @@ const HomePage =() => {
           <HeroStats/>
         
         {/* Tabs */}
-          <Tabs value={activeTab} className="mb-8">
+          <Tabs value={selectedTab} className="mb-8">
             {/* Pastillas */}
 
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger 
-                value="all" onClick={()=>{setActiveTab('all')}}> 
+                value="all" onClick={()=>{ handleSearchParams("tab", "all") }}> 
                 All Characters (16) 
               </TabsTrigger>
               
               <TabsTrigger 
-                value="favorites" className="flex items-center gap-2" onClick={()=>{setActiveTab('favorites')}}>
+                value="favorites" className="flex items-center gap-2" 
+                  onClick={()=>setSearchParams((prevParam)=>{
+                    prevParam.set("tab", "favorites")
+                    return prevParam
+                  })}
+              >
                 <Heart className="h-4 w-4" />
                 Favorites (3)
               </TabsTrigger>
 
-              <TabsTrigger value="heroes" onClick={()=>{setActiveTab('heroes')}}>Heroes (12)</TabsTrigger>
-              <TabsTrigger value="villains" onClick={()=>{setActiveTab('villains')}}>Villains (2)</TabsTrigger>
+              <TabsTrigger value="heroes" onClick={()=>{ handleSearchParams("tab", "heroes")}}>Heroes (12)</TabsTrigger>
+              <TabsTrigger value="villains" onClick={()=>{ handleSearchParams("tab", "villains") }}>Villains (2)</TabsTrigger>
             </TabsList>
 
             {/* Contenido */}
