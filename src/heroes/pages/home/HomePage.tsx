@@ -21,15 +21,22 @@ const HomePage =() => {
 
     //--Atrapar searchParam de la URL
         const activeTab = searchParams.get("tab")  || "all"
-    
-    //--Validar que el searchParam sea un valor válido (si esque se manipula la URL)
 
+        //Clase 198 paginación
+        const page = searchParams.get("page")  || "1"
+
+        const limit = searchParams.get("limit") || "6"
+
+    //--Validaciones
+
+      //-----Validar que el searchParam "tab" sea un valor válido (si esque se manipula la URL)
         const selectedTab = useMemo(()=>{
           const validTabs = ['all','favorites','heroes','villains'];
           //Validar
           return validTabs.includes(activeTab)? activeTab:'all' ;
          },[activeTab])
 
+      
     //--Método para cambiar la searchParam necesaria solamente
 
         const handleSearchParams = ( serachParam:string, newValue:string) =>{
@@ -40,12 +47,11 @@ const HomePage =() => {
           });
         }
 
-
   // Queries (tanStack)
 
     const {data:heroesResponse} = useQuery({
         queryKey:['heroes'],
-        queryFn: ()=> getHeroesByPageAction(),
+        queryFn: ()=> getHeroesByPageAction(Number(page), Number(limit)),
         staleTime: 1000 * 60 * 5 //5 minutos
     })
 
