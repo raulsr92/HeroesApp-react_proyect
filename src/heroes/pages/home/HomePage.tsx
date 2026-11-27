@@ -50,12 +50,15 @@ const HomePage =() => {
   // Queries (tanStack)
 
     const {data:heroesResponse} = useQuery({
-        queryKey:['heroes'],
+        queryKey:['heroes', {page, limit} ],
+
         queryFn: ()=> getHeroesByPageAction(Number(page), Number(limit)),
         staleTime: 1000 * 60 * 5 //5 minutos
     })
 
-    console.log({heroesResponse})
+
+    
+    console.log(heroesResponse)
 
   return (
     <>
@@ -144,12 +147,10 @@ const HomePage =() => {
 
         {/* Pagination */}
 
-        <CustomPagination totalPages={4}/>
+        <CustomPagination totalPages={heroesResponse?.pages ?? 0}/>
 
     </>
-
-
-        
+    
   )
 }
 

@@ -19,6 +19,8 @@ export const getHeroesByPageAction = async (
             limit = 6
         } 
 
+
+
     //-----Hacer petición
         const {data} = await heroApi.get<HeroesResponse>('/',
             {
@@ -29,6 +31,7 @@ export const getHeroesByPageAction = async (
             }
         );
 
+
     //-----Transformar la propiedad image de ladat arecibida de la petición
         const heroes = data.heroes.map((hero)=> (
             {
@@ -36,6 +39,7 @@ export const getHeroesByPageAction = async (
             image: `${BASE_URL}/images/${hero.image}`
             }
         ))
+
 
     //-----Retornar la data
         return {
